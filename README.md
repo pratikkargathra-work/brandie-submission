@@ -1,16 +1,47 @@
-# oriflame
+# 📊 Brandie Project Submission
 
-This is Flutter Web Project
+A web-based Flutter application built as part of an interview project submission. This portal allows
+reviewing and managing Brandie user account submissions via a clean and responsive interface.
 
-## Getting Started
+🔗 **Live Demo
+**: [https://brandiesubmission.web.app/review-accounts](https://brandiesubmission.web.app/review-accounts)
 
-This project is a starting point for a Flutter application.
+---
 
-A few resources to get you started if this is your first Flutter project:
+## 🎯 Objective
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+This project was developed to demonstrate:
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- Proficiency in Flutter Web development
+- Clean, modular code architecture
+- Riverpod state management
+- Integration and deployment using Firebase Hosting
+- User-centered UI/UX design for web platforms
+
+--- 
+
+## 🛠️ Technologies Used
+
+- **Flutter** – Frontend framework
+- **Dart** – Programming language
+- **Firebase Hosting** – Deployment platform
+- **Firebase Firestore** – Database
+
+---
+
+### Prerequisites
+
+Before running the project, ensure you have:
+
+- Flutter SDK installed ([Get Started](https://flutter.dev/docs/get-started/install))
+- Firebase CLI installed ([Install Guide](https://firebase.google.com/docs/cli))
+
+---
+
+### Installation & Setup
+
+1. **Clone the Repository**
+
+   ```bash
+   git clone https://github.com/pratikkargathra-work/brandie-submission.git
+
