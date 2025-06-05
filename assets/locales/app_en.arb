@@ -1,0 +1,69 @@
+{
+  "app_name": "Oriflame",
+
+  "common_id" : "ID",
+  "common_whatsapp_number" : "Whatsapp Number",
+  "common_friends" : "Friends",
+  "common_followers" : "Followers",
+  "common_following" : "Following",
+  "common_posts" : "Posts",
+  "common_likes" : "Likes",
+  "common_instagram" : "Instagram",
+  "common_facebook" : "Facebook",
+  "common_whatsapp" : "WhatsApp",
+  "common_tiktok" : "TikTok",
+  "common_sort_by" : "Sort by",
+  "common_filter" : "Filter",
+  "common_approve" : "Approve",
+  "common_decline" : "Decline",
+
+  "common_go_to" : "Go to",
+  "common_profile" : "Profile",
+
+  "something_went_wrong_error" : "Something went wrong. Please try again later.",
+  "no_internet_connection_error" : "No internet connection. Please check your internet connection and try again.",
+
+
+  "empty_search_result_title" : "No Results Found!",
+  "empty_search_result_description" : "Try refining your search or check for typos. We’re here to help you find what you need!",
+
+  "empty_review_accounts_title": "Nothing to show here",
+  "empty_review_accounts_description": "Your review accounts will show here",
+
+  "empty_archive_accounts_title": "Nothing Archived Yet!",
+  "empty_archive_accounts_description": "Your archived accounts will show here",
+
+  "dashboard_title" : "Dashboard",
+  "shared_content_title" : "Shared Content",
+  "members_title": "Members",
+  "library_assets_title" : "Library Assets",
+  "education_hub_title" : "Education Hub",
+  "campaigns_title" : "Campaigns",
+  "communities_title" : "Communities",
+  "hashtags_title" : "Hashtags",
+  "ai_console_title" : "AI Console",
+  "review_accounts_title" : "Review Accounts",
+  "push_notifications_title" : "Push Notifications",
+  "sharing_controls_title": "Sharing Controls",
+  "user_management_title" : "User Management",
+  "appearance_title" : "Appearance",
+  "faqs_and_tutorials_title" : "FAQs & Tutorials",
+  "sign_out_title" : "Sign Out",
+
+  "powered_by_text" : "Powered by",
+
+  "date_connected_filter_title" : "Date Connected",
+  "username_filter_title" : "Username",
+
+  "search_account_field_hint" : "Search by username, first name, last name",
+
+  "archive_title": "Archive",
+  "validate_title": "Validate",
+
+  "back_to_review_account_text" :"Go Back to Review Accounts",
+  "trying_to_connect_text" :"Trying to connect",
+  "last_post_text" :"Last Post",
+  "last_seen_text" :"Last Seen",
+  "joined_text" :"joined"
+
+}

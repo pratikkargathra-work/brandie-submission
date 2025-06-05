@@ -1,0 +1,91 @@
+name: oriflame
+description: "This is Flutter Web Project"
+
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.8.1
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # Localization
+  flutter_localizations:
+    sdk: flutter
+  intl: any
+
+  flutter_web_plugins:
+    sdk: flutter
+
+  # UI
+  cupertino_icons: ^1.0.8
+  cached_network_image: ^3.4.1
+  flutter_screenutil: ^5.9.3
+  flutter_svg: ^2.1.0
+
+  # Navigation
+  go_router: ^15.1.2
+
+  # State Management
+  flutter_riverpod: ^2.6.1
+
+  # Code Generation
+  freezed: ^3.0.6
+  freezed_annotation: ^3.0.0
+  json_serializable: ^6.9.5
+
+  # Networking
+  dio: ^5.8.0+1
+
+  # Core
+  url_launcher: ^6.3.1
+
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  # lints
+  flutter_lints: ^6.0.0
+  riverpod_lint: ^2.6.5
+
+  # code generation
+  build_runner: ^2.4.15
+  go_router_builder: ^2.9.0
+  flutter_gen_runner: ^5.10.0
+
+flutter:
+  uses-material-design: true
+  generate: true
+  fonts:
+    - family: Satoshi
+      fonts:
+        - asset: assets/fonts/satoshi/Satoshi-Light.otf
+          weight: 300
+        - asset: assets/fonts/satoshi/Satoshi-LightItalic.otf
+          weight: 300
+          style: italic
+        - asset: assets/fonts/satoshi/Satoshi-Regular.otf
+          weight: 400
+        - asset: assets/fonts/satoshi/Satoshi-Italic.otf
+          weight: 400
+          style: italic
+        - asset: assets/fonts/satoshi/Satoshi-Medium.otf
+          weight: 500
+        - asset: assets/fonts/satoshi/Satoshi-MediumItalic.otf
+          weight: 500
+          style: italic
+        - asset: assets/fonts/satoshi/Satoshi-Bold.otf
+          weight: 700
+        - asset: assets/fonts/satoshi/Satoshi-BoldItalic.otf
+          weight: 700
+          style: italic
+
+  assets:
+    - assets/images/
+    - assets/images/navigation/
+    - assets/images/social/
+    - assets/images/icons/
