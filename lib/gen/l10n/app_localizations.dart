@@ -397,19 +397,19 @@ abstract class AppLocalizations {
   /// No description provided for @last_post_text.
   ///
   /// In en, this message translates to:
-  /// **'Last Post:'**
+  /// **'Last Post'**
   String get last_post_text;
 
   /// No description provided for @last_seen_text.
   ///
   /// In en, this message translates to:
-  /// **'Last Seen:'**
+  /// **'Last Seen'**
   String get last_seen_text;
 
   /// No description provided for @joined_text.
   ///
   /// In en, this message translates to:
-  /// **'joined:'**
+  /// **'joined'**
   String get joined_text;
 }
 

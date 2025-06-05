@@ -165,11 +165,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get trying_to_connect_text => 'Trying to connect';
 
   @override
-  String get last_post_text => 'Last Post:';
+  String get last_post_text => 'Last Post';
 
   @override
-  String get last_seen_text => 'Last Seen:';
+  String get last_seen_text => 'Last Seen';
 
   @override
-  String get joined_text => 'joined:';
+  String get joined_text => 'joined';
 }

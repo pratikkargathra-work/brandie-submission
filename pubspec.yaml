@@ -43,6 +43,10 @@ dependencies:
   # Core
   url_launcher: ^6.3.1
 
+  # Database
+  firebase_core: ^3.13.1
+  cloud_firestore: ^5.6.8
+
 
 dev_dependencies:
   flutter_test:

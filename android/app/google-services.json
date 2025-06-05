@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "393969239126",
+    "project_id": "brandiesubmission",
+    "storage_bucket": "brandiesubmission.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:393969239126:android:b91640898b4d09119467f7",
+        "android_client_info": {
+          "package_name": "com.example.oriflame"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDPeFVkXiTwsGCVQ2KfemjuIIt3pJ4OR-Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
