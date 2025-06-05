@@ -35,4 +35,16 @@ class AccountService {
 
     return docs.docs.map((doc) => doc.data()).toList();
   }
+
+   Future<void> declineAccount(Account account) async {
+    await _accountsCollection.doc(account.id).update({
+      "status": AccountConnectionStatus.declined.value,
+    });
+  }
+
+  Future<void> approveAccount(Account account) async {
+    await _accountsCollection.doc(account.id).update({
+      "status": AccountConnectionStatus.approved.value,
+    });
+  }
 }

@@ -104,8 +104,46 @@ class _ReviewAccountsList extends ConsumerWidget {
                   ),
                 );
               },
-              onApprove: () {},
-              onDecline: () {},
+              onApprove: () async {
+                await ref
+                    .read(reviewAccountsStateNotifier.notifier)
+                    .onApprove(state.sortedAccounts[index]);
+                if (context.mounted) {
+                  showCustomSnackBar(
+                    context: context,
+                    text: context.l10n.account_approved_text,
+                    backgroundColor: Color.alphaBlend(
+                      context.colorScheme.surface.withValues(alpha: 0.8),
+                      context.colorScheme.statusRed,
+                    ),
+                    icon: Icon(
+                      Icons.check_circle,
+                      color: context.colorScheme.statusGreen,
+                      size: 18,
+                    ),
+                  );
+                }
+              },
+              onDecline: () async {
+                await ref
+                    .read(reviewAccountsStateNotifier.notifier)
+                    .onDecline(state.sortedAccounts[index]);
+                if (context.mounted) {
+                  showCustomSnackBar(
+                    context: context,
+                    text: context.l10n.account_declined_text,
+                    backgroundColor: Color.alphaBlend(
+                      context.colorScheme.surface.withValues(alpha: 0.8),
+                      context.colorScheme.statusRed,
+                    ),
+                    icon: Icon(
+                      Icons.cancel,
+                      color: context.colorScheme.statusRed,
+                      size: 18,
+                    ),
+                  );
+                }
+              },
             ),
           ),
         ),

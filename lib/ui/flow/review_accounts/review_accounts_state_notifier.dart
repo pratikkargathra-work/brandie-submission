@@ -124,6 +124,37 @@ class ReviewAccountsStateNotifier extends StateNotifier<ReviewAccountsState> {
     }
   }
 
+  Future<void> onApprove(Account account) async {
+    await _accountService.approveAccount(account);
+    state = state.copyWith(
+      accounts: state.accounts.toList()
+        ..removeWhere((element) => element.id == account.id),
+      sortedAccounts: state.sortedAccounts.toList()
+        ..removeWhere((element) => element.id == account.id),
+    );
+  }
+
+  Future<void> onDecline(Account account) async {
+    await _accountService.declineAccount(account);
+    state = state.copyWith(
+      accounts: state.accounts.toList()
+        ..removeWhere((element) => element.id == account.id),
+      sortedAccounts: state.sortedAccounts.toList()
+        ..removeWhere((element) => element.id == account.id),
+    );
+  }
+
+  Future<void> removeAccount(Account account) async {
+    state = state.copyWith(
+      accounts: state.accounts.toList()
+        ..removeWhere((element) => element.id == account.id),
+      sortedAccounts: state.sortedAccounts.toList()
+        ..removeWhere((element) => element.id == account.id),
+    );
+  }
+
+
+
   @override
   void dispose() {
     state.searchController.dispose();

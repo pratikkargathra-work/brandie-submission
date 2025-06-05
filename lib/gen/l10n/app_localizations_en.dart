@@ -172,4 +172,12 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get joined_text => 'joined';
+
+  @override
+  String get account_approved_text =>
+      'Account connection approved successfully';
+
+  @override
+  String get account_declined_text =>
+      'Account connection declined successfully';
 }
