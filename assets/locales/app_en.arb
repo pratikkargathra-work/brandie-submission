@@ -64,6 +64,9 @@
   "trying_to_connect_text" :"Trying to connect",
   "last_post_text" :"Last Post",
   "last_seen_text" :"Last Seen",
-  "joined_text" :"joined"
+  "joined_text" :"joined",
+
+  "account_approved_text" : "Account connection approved successfully",
+  "account_declined_text" : "Account connection declined successfully"
 
 }

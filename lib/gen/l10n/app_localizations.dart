@@ -411,6 +411,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'joined'**
   String get joined_text;
+
+  /// No description provided for @account_approved_text.
+  ///
+  /// In en, this message translates to:
+  /// **'Account connection approved successfully'**
+  String get account_approved_text;
+
+  /// No description provided for @account_declined_text.
+  ///
+  /// In en, this message translates to:
+  /// **'Account connection declined successfully'**
+  String get account_declined_text;
 }
 
 class _AppLocalizationsDelegate

@@ -10,6 +10,7 @@ import 'package:oriflame/ui/flow/review_accounts/detail/review_account_detail_st
 import '../../../../data/models/account/account.dart';
 import '../../../../gen/assets.gen.dart';
 import '../../../../style/theme/typography/typography.dart';
+import '../../../components/snack_bar.dart';
 import '../components/account_state.dart';
 
 class ReviewAccountDetailDialog extends ConsumerStatefulWidget {
@@ -63,27 +64,7 @@ class _ReviewAccountDetailDialogState
                     padding: const EdgeInsets.symmetric(horizontal: 30),
                     child: previousButton(),
                   ),
-                  Expanded(
-                    child: PageView(
-                      onPageChanged: _notifier.onPageChanged,
-                      controller: state.pageController,
-                      physics: const NeverScrollableScrollPhysics(),
-                      children: state.accounts
-                          .map(
-                            (account) => Center(
-                              child: Padding(
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 30,
-                                ),
-                                child: AccountDetailItem(
-                                  currentAccount: account,
-                                ),
-                              ),
-                            ),
-                          )
-                          .toList(),
-                    ),
-                  ),
+                  _pageView(context, state),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 30),
                     child: nextButton(),
@@ -94,20 +75,7 @@ class _ReviewAccountDetailDialogState
           } else {
             return Column(
               children: [
-                Expanded(
-                  child: PageView(
-                    onPageChanged: _notifier.onPageChanged,
-                    controller: state.pageController,
-                    physics: const NeverScrollableScrollPhysics(),
-                    children: state.accounts
-                        .map(
-                          (account) => Center(
-                            child: AccountDetailItem(currentAccount: account),
-                          ),
-                        )
-                        .toList(),
-                  ),
-                ),
+                _pageView(context, state),
                 const SizedBox(height: 40),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -118,6 +86,85 @@ class _ReviewAccountDetailDialogState
             );
           }
         },
+      ),
+    );
+  }
+
+  Widget _pageView(BuildContext context, ReviewAccountDetailState state) {
+    return Expanded(
+      child: PageView(
+        onPageChanged: _notifier.onPageChanged,
+        controller: state.pageController,
+        physics: const NeverScrollableScrollPhysics(),
+        children: state.accounts
+            .map(
+              (account) => Center(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 30),
+                  child: AccountDetailItem(
+                    currentAccount: account,
+                    approveLoading:
+                        state.approveLoading != null &&
+                        account.id == state.approveLoading,
+                    declineLoading:
+                        state.declineLoading != null &&
+                        account.id == state.declineLoading,
+                    onDecline:
+                        state.declineLoading != null &&
+                            account.id == state.declineLoading
+                        ? null
+                        : () {
+                            _notifier.onDecline(account, () async {
+                              if (context.mounted) {
+                                await showCustomSnackBar(
+                                  context: context,
+                                  text: context.l10n.account_declined_text,
+                                  backgroundColor: Color.alphaBlend(
+                                    context.colorScheme.surface.withValues(
+                                      alpha: 0.8,
+                                    ),
+                                    context.colorScheme.statusRed,
+                                  ),
+                                  icon: Icon(
+                                    Icons.cancel,
+                                    color: context.colorScheme.statusRed,
+                                    size: 18,
+                                  ),
+                                );
+                              }
+                            });
+                          },
+                    onApprove:
+                        state.approveLoading != null &&
+                            account.id == state.approveLoading
+                        ? null
+                        : () {
+                            _notifier.onApprove(account, () async {
+                              if (context.mounted) {
+                                await showCustomSnackBar(
+                                  context: context,
+                                  text: context.l10n.account_approved_text,
+                                  backgroundColor: Color.alphaBlend(
+                                    context.colorScheme.surface.withValues(
+                                      alpha: 0.8,
+                                    ),
+                                    context.colorScheme.statusGreen,
+                                  ),
+                                  icon: Icon(
+                                    Icons.check_circle,
+                                    color: context.colorScheme.statusGreen,
+                                    size: 18,
+                                  ),
+                                );
+                              }
+                            });
+                          },
+                    onLink: () {},
+                  ),
+                ),
+              ),
+            )
+            .toList(),
       ),
     );
   }
@@ -160,9 +207,23 @@ class _ReviewAccountDetailDialogState
 }
 
 class AccountDetailItem extends StatelessWidget {
+  final void Function()? onDecline;
+  final bool approveLoading;
+  final void Function()? onApprove;
+  final bool declineLoading;
+  final void Function() onLink;
+
   final Account currentAccount;
 
-  const AccountDetailItem({super.key, required this.currentAccount});
+  const AccountDetailItem({
+    super.key,
+    required this.currentAccount,
+    required this.onDecline,
+    required this.onApprove,
+    required this.onLink,
+    this.approveLoading = false,
+    this.declineLoading = false,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -406,23 +467,26 @@ class AccountDetailItem extends StatelessWidget {
             ),
             const SizedBox(height: 16),
             if (currentAccount.socialPlatform != SocialPlatform.whatsapp)
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SvgPicture.asset(
-                    Assets.images.icons.externalLink,
-                    height: 20,
-                    width: 20,
-                  ),
-                  const SizedBox(width: 4),
-                  Text(
-                    "${context.l10n.common_go_to} ${{SocialPlatform.instagram: context.l10n.common_instagram, SocialPlatform.facebook: context.l10n.common_facebook, SocialPlatform.tiktok: context.l10n.common_tiktok}[currentAccount.socialPlatform]!} ${context.l10n.common_profile}",
-                    style: AppTextStyles.body.copyWith(
-                      color: context.colorScheme.primary,
-                      fontWeight: FontWeight.bold,
+              OnTapScale(
+                onTap: onLink,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SvgPicture.asset(
+                      Assets.images.icons.externalLink,
+                      height: 20,
+                      width: 20,
                     ),
-                  ),
-                ],
+                    const SizedBox(width: 4),
+                    Text(
+                      "${context.l10n.common_go_to} ${{SocialPlatform.instagram: context.l10n.common_instagram, SocialPlatform.facebook: context.l10n.common_facebook, SocialPlatform.tiktok: context.l10n.common_tiktok}[currentAccount.socialPlatform]!} ${context.l10n.common_profile}",
+                      style: AppTextStyles.body.copyWith(
+                        color: context.colorScheme.primary,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
               ),
 
             const SizedBox(height: 40),
@@ -431,56 +495,77 @@ class AccountDetailItem extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 OnTapScale(
-                  onTap: () {},
+                  onTap: onDecline,
                   child: Container(
                     padding: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
                     decoration: BoxDecoration(
                       color: context.colorScheme.statusRed,
                       borderRadius: BorderRadius.circular(8),
                     ),
-                    child: Row(
-                      children: [
-                        Icon(
-                          Icons.close,
-                          color: context.colorScheme.onPrimary,
-                          size: 20,
-                        ),
-                        const SizedBox(width: 8),
-                        Text(
-                          context.l10n.common_decline,
-                          style: AppTextStyles.body2.copyWith(
-                            color: context.colorScheme.onPrimary,
+                    child: declineLoading
+                        ? SizedBox(
+                            height: 20,
+                            width: 20,
+                            child: CircularProgressIndicator(
+                              strokeWidth: 3,
+                              color: context.colorScheme.onPrimary,
+                              strokeCap: StrokeCap.round,
+                            ),
+                          )
+                        : Row(
+                            children: [
+                              Icon(
+                                Icons.close,
+                                color: context.colorScheme.onPrimary,
+                                size: 20,
+                              ),
+                              const SizedBox(width: 8),
+                              Text(
+                                context.l10n.common_decline,
+                                style: AppTextStyles.body2.copyWith(
+                                  color: context.colorScheme.onPrimary,
+                                ),
+                              ),
+                            ],
                           ),
-                        ),
-                      ],
-                    ),
                   ),
                 ),
                 const SizedBox(width: 24),
                 OnTapScale(
-                  onTap: () {},
+                  onTap: onApprove,
                   child: Container(
+                    alignment: Alignment.center,
                     padding: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
                     decoration: BoxDecoration(
                       color: context.colorScheme.primary,
                       borderRadius: BorderRadius.circular(8),
                     ),
-                    child: Row(
-                      children: [
-                        Icon(
-                          Icons.check_rounded,
-                          color: context.colorScheme.onPrimary,
-                          size: 20,
-                        ),
-                        const SizedBox(width: 8),
-                        Text(
-                          context.l10n.common_approve,
-                          style: AppTextStyles.body2.copyWith(
-                            color: context.colorScheme.onPrimary,
+                    child: approveLoading
+                        ? SizedBox(
+                            height: 20,
+                            width: 20,
+                            child: CircularProgressIndicator(
+                              strokeWidth: 3,
+                              color: context.colorScheme.onPrimary,
+                              strokeCap: StrokeCap.round,
+                            ),
+                          )
+                        : Row(
+                            children: [
+                              Icon(
+                                Icons.check_rounded,
+                                color: context.colorScheme.onPrimary,
+                                size: 20,
+                              ),
+                              const SizedBox(width: 8),
+                              Text(
+                                context.l10n.common_approve,
+                                style: AppTextStyles.body2.copyWith(
+                                  color: context.colorScheme.onPrimary,
+                                ),
+                              ),
+                            ],
                           ),
-                        ),
-                      ],
-                    ),
                   ),
                 ),
               ],

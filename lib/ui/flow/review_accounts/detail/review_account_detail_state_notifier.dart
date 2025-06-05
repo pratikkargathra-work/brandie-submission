@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:oriflame/data/services%20/account_service.dart';
+import 'package:oriflame/ui/flow/review_accounts/review_accounts_state_notifier.dart';
 import '../../../../data/models/account/account.dart';
 
 part 'review_account_detail_state_notifier.freezed.dart';
@@ -16,17 +17,20 @@ final reviewAccountsStateNotifierProvider = StateNotifierProvider.family
         value.accounts,
         value.current,
         ref.read(accountServiceProvider),
+        ref.read(reviewAccountsStateNotifier.notifier),
       );
     });
 
 class ReviewAccountDetailStateNotifier
     extends StateNotifier<ReviewAccountDetailState> {
   final AccountService _accountService;
+  final ReviewAccountsStateNotifier _reviewNotifier;
 
   ReviewAccountDetailStateNotifier(
     List<Account> accounts,
     int current,
     this._accountService,
+    this._reviewNotifier,
   ) : super(
         ReviewAccountDetailState(
           accounts: accounts,
@@ -53,6 +57,47 @@ class ReviewAccountDetailStateNotifier
     );
   }
 
+  Future<void> onDecline(
+    Account account,
+    Future<void> Function() showToast,
+  ) async {
+    try {
+      state = state.copyWith(error: null, declineLoading: account.id);
+      await _accountService.declineAccount(account);
+
+      await showToast();
+      state = state.copyWith(
+        accounts: state.accounts.toList()
+          ..removeWhere((element) => element.id == account.id),
+        declineLoading: null,
+      );
+      _reviewNotifier.removeAccount(account);
+    } catch (e) {
+      state = state.copyWith(error: e, declineLoading: null);
+    }
+  }
+
+  Future<void> onApprove(
+    Account account,
+    Future<void> Function() showToast,
+  ) async {
+    try {
+      state = state.copyWith(error: null, approveLoading: account.id);
+      await _accountService.approveAccount(account);
+
+      await showToast();
+
+      state = state.copyWith(
+        accounts: state.accounts.toList()
+          ..removeWhere((element) => element.id == account.id),
+        approveLoading: null,
+      );
+      _reviewNotifier.removeAccount(account);
+    } catch (e) {
+      state = state.copyWith(error: e, approveLoading: null);
+    }
+  }
+
   @override
   void dispose() {
     state.pageController.dispose();
@@ -64,6 +109,8 @@ class ReviewAccountDetailStateNotifier
 abstract class ReviewAccountDetailState with _$ReviewAccountDetailState {
   const factory ReviewAccountDetailState({
     @Default(<Account>[]) List<Account> accounts,
+    String? approveLoading,
+    String? declineLoading,
     @Default(0) int current,
     required PageController pageController,
     Object? error,
