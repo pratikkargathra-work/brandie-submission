@@ -124,6 +124,16 @@ class ArchiveAccountsStateNotifier extends StateNotifier<ArchiveAccountsState> {
     }
   }
 
+  Future<void> onApprove(Account account) async {
+    await _accountService.approveAccount(account);
+    state = state.copyWith(
+      accounts: state.accounts.toList()
+        ..removeWhere((element) => element.id == account.id),
+      sortedAccounts: state.sortedAccounts.toList()
+        ..removeWhere((element) => element.id == account.id),
+    );
+  }
+
   @override
   void dispose() {
     state.searchController.dispose();
