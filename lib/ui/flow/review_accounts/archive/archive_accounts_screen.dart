@@ -86,8 +86,29 @@ class _ArchiveAccountsList extends ConsumerWidget {
             state.sortedAccounts.length,
             (index) => AccountCard(
               account: state.sortedAccounts[index],
-              onTap: () {},
-              onApprove: () {},
+              onTap: () {
+                ///TODO: open account details
+              },
+              onApprove: () {
+                ref
+                    .read(archiveAccountsStateNotifier.notifier)
+                    .onApprove(state.sortedAccounts[index]);
+                if (context.mounted) {
+                  showCustomSnackBar(
+                    context: context,
+                    text: context.l10n.account_approved_text,
+                    backgroundColor: Color.alphaBlend(
+                      context.colorScheme.surface.withValues(alpha: 0.8),
+                      context.colorScheme.statusRed,
+                    ),
+                    icon: Icon(
+                      Icons.check_circle,
+                      color: context.colorScheme.statusGreen,
+                      size: 18,
+                    ),
+                  );
+                }
+              },
             ),
           ),
         ),
