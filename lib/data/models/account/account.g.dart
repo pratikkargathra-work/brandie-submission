@@ -20,13 +20,17 @@ _Account _$AccountFromJson(Map<String, dynamic> json) => _Account(
   posts: (json['posts'] as num?)?.toInt(),
   likes: (json['likes'] as num?)?.toInt(),
   friends: (json['friends'] as num?)?.toInt(),
-  date_joined: DateTime.parse(json['date_joined'] as String),
-  last_seen: json['last_seen'] == null
-      ? null
-      : DateTime.parse(json['last_seen'] as String),
-  last_post: json['last_post'] == null
-      ? null
-      : DateTime.parse(json['last_post'] as String),
+  date_joined: const TimeStampJsonConverter().fromJson(
+    json['date_joined'] as Object,
+  ),
+  last_seen: _$JsonConverterFromJson<Object, DateTime>(
+    json['last_seen'],
+    const TimeStampJsonConverter().fromJson,
+  ),
+  last_post: _$JsonConverterFromJson<Object, DateTime>(
+    json['last_post'],
+    const TimeStampJsonConverter().fromJson,
+  ),
 );
 
 Map<String, dynamic> _$AccountToJson(_Account instance) => <String, dynamic>{
@@ -41,9 +45,15 @@ Map<String, dynamic> _$AccountToJson(_Account instance) => <String, dynamic>{
   'posts': instance.posts,
   'likes': instance.likes,
   'friends': instance.friends,
-  'date_joined': instance.date_joined.toIso8601String(),
-  'last_seen': instance.last_seen?.toIso8601String(),
-  'last_post': instance.last_post?.toIso8601String(),
+  'date_joined': const TimeStampJsonConverter().toJson(instance.date_joined),
+  'last_seen': _$JsonConverterToJson<Object, DateTime>(
+    instance.last_seen,
+    const TimeStampJsonConverter().toJson,
+  ),
+  'last_post': _$JsonConverterToJson<Object, DateTime>(
+    instance.last_post,
+    const TimeStampJsonConverter().toJson,
+  ),
 };
 
 const _$AccountConnectionStatusEnumMap = {
@@ -51,3 +61,13 @@ const _$AccountConnectionStatusEnumMap = {
   AccountConnectionStatus.approved: 'approved',
   AccountConnectionStatus.declined: 'declined',
 };
+
+Value? _$JsonConverterFromJson<Json, Value>(
+  Object? json,
+  Value? Function(Json json) fromJson,
+) => json == null ? null : fromJson(json as Json);
+
+Json? _$JsonConverterToJson<Json, Value>(
+  Value? value,
+  Json? Function(Value value) toJson,
+) => value == null ? null : toJson(value);

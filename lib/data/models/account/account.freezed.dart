@@ -16,7 +16,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$Account {
 
- String get id; String get name; String get email; String get avatar; AccountConnectionStatus get status; String get profile_link; int? get followers; int? get following; int? get posts; int? get likes; int? get friends; DateTime get date_joined; DateTime? get last_seen; DateTime? get last_post;
+ String get id; String get name; String get email; String get avatar; AccountConnectionStatus get status; String get profile_link; int? get followers; int? get following; int? get posts; int? get likes; int? get friends;@TimeStampJsonConverter() DateTime get date_joined;@TimeStampJsonConverter() DateTime? get last_seen;@TimeStampJsonConverter() DateTime? get last_post;
 /// Create a copy of Account
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -49,7 +49,7 @@ abstract mixin class $AccountCopyWith<$Res>  {
   factory $AccountCopyWith(Account value, $Res Function(Account) _then) = _$AccountCopyWithImpl;
 @useResult
 $Res call({
- String id, String name, String email, String avatar, AccountConnectionStatus status, String profile_link, int? followers, int? following, int? posts, int? likes, int? friends, DateTime date_joined, DateTime? last_seen, DateTime? last_post
+ String id, String name, String email, String avatar, AccountConnectionStatus status, String profile_link, int? followers, int? following, int? posts, int? likes, int? friends,@TimeStampJsonConverter() DateTime date_joined,@TimeStampJsonConverter() DateTime? last_seen,@TimeStampJsonConverter() DateTime? last_post
 });
 
 
@@ -93,7 +93,7 @@ as DateTime?,
 @JsonSerializable()
 
 class _Account extends Account {
-  const _Account({required this.id, required this.name, required this.email, required this.avatar, this.status = AccountConnectionStatus.pending, required this.profile_link, this.followers, this.following, this.posts, this.likes, this.friends, required this.date_joined, this.last_seen, this.last_post}): super._();
+  const _Account({required this.id, required this.name, required this.email, required this.avatar, this.status = AccountConnectionStatus.pending, required this.profile_link, this.followers, this.following, this.posts, this.likes, this.friends, @TimeStampJsonConverter() required this.date_joined, @TimeStampJsonConverter() this.last_seen, @TimeStampJsonConverter() this.last_post}): super._();
   factory _Account.fromJson(Map<String, dynamic> json) => _$AccountFromJson(json);
 
 @override final  String id;
@@ -107,9 +107,9 @@ class _Account extends Account {
 @override final  int? posts;
 @override final  int? likes;
 @override final  int? friends;
-@override final  DateTime date_joined;
-@override final  DateTime? last_seen;
-@override final  DateTime? last_post;
+@override@TimeStampJsonConverter() final  DateTime date_joined;
+@override@TimeStampJsonConverter() final  DateTime? last_seen;
+@override@TimeStampJsonConverter() final  DateTime? last_post;
 
 /// Create a copy of Account
 /// with the given fields replaced by the non-null parameter values.
@@ -144,7 +144,7 @@ abstract mixin class _$AccountCopyWith<$Res> implements $AccountCopyWith<$Res> {
   factory _$AccountCopyWith(_Account value, $Res Function(_Account) _then) = __$AccountCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String name, String email, String avatar, AccountConnectionStatus status, String profile_link, int? followers, int? following, int? posts, int? likes, int? friends, DateTime date_joined, DateTime? last_seen, DateTime? last_post
+ String id, String name, String email, String avatar, AccountConnectionStatus status, String profile_link, int? followers, int? following, int? posts, int? likes, int? friends,@TimeStampJsonConverter() DateTime date_joined,@TimeStampJsonConverter() DateTime? last_seen,@TimeStampJsonConverter() DateTime? last_post
 });
 
 

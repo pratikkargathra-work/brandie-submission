@@ -1,6 +1,7 @@
 // ignore_for_file: non_constant_identifier_names
 
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:oriflame/data/core/converters/time_stamp_converter.dart';
 
 part 'account.freezed.dart';
 
@@ -22,9 +23,9 @@ abstract class Account with _$Account {
     int? posts,
     int? likes,
     int? friends,
-    required DateTime date_joined,
-    DateTime? last_seen,
-    DateTime? last_post,
+    @TimeStampJsonConverter() required DateTime date_joined,
+    @TimeStampJsonConverter() DateTime? last_seen,
+    @TimeStampJsonConverter() DateTime? last_post,
   }) = _Account;
 
   factory Account.fromJson(Map<String, dynamic> json) =>
@@ -45,7 +46,7 @@ abstract class Account with _$Account {
   }
 }
 
-@JsonEnum()
+@JsonEnum(valueField: "value")
 enum AccountConnectionStatus {
   pending('pending'),
   approved('approved'),
@@ -56,7 +57,7 @@ enum AccountConnectionStatus {
   const AccountConnectionStatus(this.value);
 }
 
-@JsonEnum()
+@JsonEnum(valueField: "value")
 enum SocialPlatform {
   instagram('instagram'),
   facebook('facebook'),
